@@ -2,7 +2,6 @@ package application.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import edu.cmu.ri.createlab.terk.robot.finch.Finch;
 
 public class RobotController {

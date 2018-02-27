@@ -1,7 +1,6 @@
 package application.logic;
 
 import java.util.List;
-
 import application.view.ControlScreenController;
 
 public class Retracer {

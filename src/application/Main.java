@@ -1,7 +1,6 @@
 package application;
 	
 import java.io.IOException;
-
 import application.logic.RobotController;
 import application.view.ControlScreenController;
 import application.view.RootLayoutController;

@@ -1,9 +1,7 @@
 package application.view;
 
-
 import application.Main;
 import application.logic.InputStorage;
-//import application.Main;
 import application.logic.Retracer;
 import application.logic.RobotController;
 import javafx.beans.value.ChangeListener;
@@ -173,6 +171,13 @@ public class ControlScreenController {
 		direction.clear();
 	}
 	
+	private void clearData() { 
+		clearNum();
+		clearSpeed();
+		clearDirection();
+		clearDuration();
+	}
+	
 	//background thread for running bot commands so UI doesn't freeze
 	@FXML
 	public void startAction() {
@@ -247,62 +252,60 @@ public class ControlScreenController {
 				bot.endFinch();
 				System.exit(0);
 				break;
+				
 			default:
 					actionUpdate("Invalid input! Please double check the intstructions and try again");
 		}
-		
+		//Clear the text boxes for next action
 		clearData();
 	}
-	
+	//Check for invalid values and notify user
 	private boolean validate(int speed, int duration) {
+		
+		//if flag is true there was an invalid value
+		boolean flag = false;
+		
+		//check speed
 		if(speed < 100 && speed > 200) {
 			actionUpdate("Speed must be between 100 and 200 Finch units");
-			if(duration <= 0 && duration > 6)
-				actionUpdate("Duration must be between 1 and 6 seconds, dummie!");
-				return true;
+			flag = true;
 		}
-		return	 false;
+		
+		//check duration
+		if(duration <= 0 && duration > 6) {
+			actionUpdate("Duration must be between 1 and 6 seconds, dummie!");
+			flag = true;
+		}
+		//true if invalid values present
+		return flag ? true : false;
 	}
 	
-	private void clearData() { 
-		clearNum();
-		clearSpeed();
-		clearDirection();
-		clearDuration();
-	}
 	
+	//retrace call from the UI
 	@FXML
 	private void retrace() {
-		
+		//handle nulls
 		try {
 			int num = getNum();
 			
+			//call the call to retrace and clear data
 			retracer.callRetrace(num, bot.inputList);
 			clearData();
 			
 		} catch (Exception e) {
 			
+			//clear data either way
 			clearData();
-			actionUpdate("Invalid retrace input, please try again!");
 		}
 	}
 	
+	//sends new update message to UI
 	public void actionUpdate(String message) {
 		String update = outputArea.getText() + "\r\n" + "> " + message;
 		outputArea.setText(update);
 	}
 	
-	/*
-	 * 
-	 * TEST Methods
-	 * 
-	 */
-	
-	@FXML
-	private void testSetter() {
-		clearNum();
-		actionUpdate("YOO");
-	}
+	//give main access to bot instance. Getting pretty dependency heavy now!
 	public void setMain(Main main) {
 		this.main = main;
 		main.bot = bot;
