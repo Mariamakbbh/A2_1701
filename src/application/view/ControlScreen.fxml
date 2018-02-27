@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ControlScreenController">
+   <children>
+      <Pane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextArea editable="false" layoutX="190.0" layoutY="63.0" prefHeight="227.0" prefWidth="420.0" scaleShape="false" text="                          Valid Values&#10;Direction: F, B, L and R&#10;Speed: 100-200 Finch Units&#10;Duration: 1-6 (Seconds) &#10;&#10;Retrace:&#10;a value equal to or less then the total number &#10;of actions taken &#10;&#10;Q in direction text field: Stop Finc">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="numToRetrace" layoutX="173.0" layoutY="324.0" prefHeight="31.0" prefWidth="60.0" />
+            <TextField fx:id="direction" layoutX="420.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
+            <TextField fx:id="speed" layoutX="509.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
+            <TextField fx:id="duration" layoutX="597.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
+            <Button layoutX="171.0" layoutY="400.0" mnemonicParsing="false" onAction="#retrace" text="Retrace" />
+            <Button layoutX="517.0" layoutY="401.0" mnemonicParsing="false" onAction="#startAction" text="Start" />
+            <TextArea fx:id="outputArea" editable="false" layoutX="100.0" layoutY="462.0" prefHeight="100.0" prefWidth="600.0" wrapText="true" />
+            <Label layoutX="144.0" layoutY="356.0" text="Number to retrace" />
+            <Label layoutX="420.0" layoutY="356.0" text="Direction" />
+            <Label layoutX="518.0" layoutY="356.0" text="Speed" />
+            <Label layoutX="598.0" layoutY="356.0" text="Duration" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
