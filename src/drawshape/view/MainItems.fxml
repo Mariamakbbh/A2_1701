@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="324.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drawshape.view.MainItemsController">
+   <center>
+      <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="324.0" fitWidth="300.0" onMouseClicked="#drawRectNewStage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/DrawRectangle.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="324.0" fitWidth="300.0" onMouseClicked="#drawTriangleNewStage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/DrawTriangle.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="324.0" fitWidth="300.0" onMouseClicked="#exit" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/Exit.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </FlowPane>
+   </center>
+</BorderPane>

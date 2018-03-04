@@ -258,7 +258,10 @@ public class ControlScreenController {
 		}
 		//make sure text is lower case
 		direction = Character.toLowerCase(direction);
-		
+		if(direction == 'q') {
+			bot.endFinch();
+			System.exit(0);	
+		}
 		//validate speed and duration are within bounds
 		if(validate(speed, duration)){
 			//error message to user
@@ -294,12 +297,6 @@ public class ControlScreenController {
 				bot.addAction(new InputStorage(direction, speed, duration)) 	;
 				actionUpdate("Finch is moving left at " + speed + " for " + duration);
 				break;
-				
-			case 'q': //implements Q command, incase anyone wants to use it
-				bot.endFinch();
-				System.exit(0);
-				break;
-				
 			default:
 					actionUpdate("Invalid input! Please double check the intstructions and try again");
 		}

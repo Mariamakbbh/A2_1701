@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: fff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="drawshape.view.StatisticsController">
+   <left>
+      <BorderPane prefHeight="500.0" prefWidth="310.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
+         <center>
+            <TextArea fx:id="taListOfShapesDrawn" disable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </left>
+   <top>
+      <Pane prefHeight="66.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="398.0" layoutY="8.0" text="Statistics">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDrawingList" layoutX="10.0" layoutY="38.0" text="DRAWINGS LIST: (latest first)">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
+            <Label fx:id="lblMostDrawn" layoutX="616.0" layoutY="38.0" text="The most drawn shape is:">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+   <bottom>
+      <Pane prefHeight="50.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="closeButton" layoutX="405.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="Exit App">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+         </children>
+      </Pane>
+   </bottom>
+   <center>
+      <VBox prefHeight="484.0" prefWidth="375.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <VBox prefHeight="484.0" prefWidth="288.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="txtMostDrawnShape" prefHeight="35.0" prefWidth="219.0" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>
