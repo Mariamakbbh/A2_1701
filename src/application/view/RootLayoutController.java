@@ -24,7 +24,7 @@ public class RootLayoutController {
 	private void about() {
 		
 		//out going message
-		String details = "Assignment 2, Task 3: Navigate designed and implemented by Hamilton Manalo with heavy assistance from Stackoverflow.";
+		String details = "Assignment 2, Task 3: Navigate designed and implemented by Hamilton Manalo with heavy assistance from Stackoverflow. \r\n UI: JavaFX";
 		//create alert, set title and head then display
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("About");

@@ -18,8 +18,10 @@ public class Retracer {
 	
 	//validate comment prior to executing 
 	public void callRetrace(int numToRetrace, List<InputStorage> listOfMovements) {
+		int listLength = listOfMovements.size();
+		
 		//validate request 
-		if(listOfMovements.size() < numToRetrace){
+		if(listLength >= numToRetrace && numToRetrace < 1 ){
 			out.actionUpdate("You haven't completed " + numToRetrace + " actions yet! Try " + listOfMovements.size() + " or less");
 			return;
 		}

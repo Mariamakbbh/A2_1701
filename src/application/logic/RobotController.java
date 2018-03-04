@@ -32,12 +32,12 @@ public class RobotController {
 	
 	//helper method to turn left
 	private void left() {
-		bot.setWheelVelocities(140, -105, 850);
+		bot.setWheelVelocities(-140, 105, 850);
 	}
 	
 	//helper method to turn right
 	private void right() {
-		bot.setWheelVelocities(-105, 140, 850);
+		bot.setWheelVelocities(105, -140, 850);
 	}
 	
 	//movement commands

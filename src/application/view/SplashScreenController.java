@@ -17,7 +17,7 @@ public class SplashScreenController {
 		main.showControlScreen();
 	}
 	
-	//give access to main
+	//give access to main 
 	public void setMain(Main main) {
 		this.main = main;
 	}

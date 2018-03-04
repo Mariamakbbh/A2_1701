@@ -30,8 +30,9 @@ public class ControlScreenController {
 
 	private Retracer retracer;
 	private RobotController bot;
+	@SuppressWarnings("unused")
 	private Main main;
-	
+	private ControlScreenController Controller;
 	
 	public ControlScreenController() {
 	}
@@ -39,9 +40,9 @@ public class ControlScreenController {
 	public void initialize() {
 		
 		//create instances of bot and retrace class when layout is loaded
-		bot = new RobotController();
-		retracer = new Retracer(bot, this);
-		bot.startFinch();
+		startServices();
+		//hold copy of this class and pass it to Bot
+		 Controller = this;
 		
 		/*
 		 * attach event listeners for text inputs which minimize user input error
@@ -72,12 +73,21 @@ public class ControlScreenController {
 		speed.textProperty().addListener(new ChangeListener<String>() {
 			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
 				        String newValue) {
-				        if (!newValue.matches("[0-9]{1,3}")) {
-				    		speed.setText(newValue.replaceAll("[^0-9]{0,3}", ""));
+						if(!newValue.matches("[0-9]*")) { 
+							 speed.setText(newValue.replaceAll("[^0-9]", ""));
+							 return;
+						}
+				        if (!newValue.matches("[0-9]*")) {
+				    		speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
 				        }
 				        if(newValue.length() > 3) {
 				        	speed.setText(oldValue.substring(0, 3));
-				        }}});
+				        }
+				        if(!newValue.matches("[1|2][0-9]*")) {
+				        	speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
+				        }
+				        
+			 }});
 		
 		//make sure direction is valid F, B, L, R no more then 1 character
 		direction.textProperty().addListener(new ChangeListener<String>() {
@@ -86,10 +96,19 @@ public class ControlScreenController {
 				        if (!newValue.matches("[f|F|b|B|r|R|l|L|q|Q]")) {
 				        	direction.setText(newValue.replaceAll("[^f|F|b|B|r|R|l|L|q|Q]", ""));
 				        }
-				        if(newValue.length() > 3) {
+				        if(newValue.length() > 1) {
 				        	direction.setText(oldValue.substring(0, 1));
 				        }	        
 			 }});
+		
+		///scroll to bottom of textarea after update
+		outputArea.textProperty().addListener(new ChangeListener<Object>() {
+			@Override
+			public void changed(ObservableValue<?> observable, Object oldValue,
+		            Object newValue) {
+				outputArea.setScrollTop(Double.MAX_VALUE);
+			}
+			});
 		
 		//set initial action window message
 		String welcome = "> Prepare to assume control of a very powerful Robot";
@@ -104,9 +123,6 @@ public class ControlScreenController {
 			
 		if(numToRetrace.getText().trim().equals("")){
 			
-			System.out.println("Called");
-			System.out.println(numToRetrace.getText().toString());
-			return 0;
 		}
 		int value = Integer.parseInt(numToRetrace.getText());
 		return value;
@@ -181,17 +197,44 @@ public class ControlScreenController {
 	//background thread for running bot commands so UI doesn't freeze
 	@FXML
 	public void startAction() {
-		System.out.println("startAction called");
 		Runnable task = new Runnable() {
 			public void run() {
 				acceptInput();
 			}
 		};
-		//May work
 		Thread finchAction = new Thread(task);
 		finchAction.setDaemon(true);
 		finchAction.start();
 	}
+	
+	@FXML
+	public void startRetrace() {
+		System.out.println("Retracing in thread");
+		Runnable task = new Runnable() {
+			public void run() {
+				retrace();
+			}
+		};
+		Thread retraceThread = new Thread(task);
+		retraceThread.setDaemon(true);
+		retraceThread.start();
+	}
+	public void startServices() {
+		System.out.println("Starting serivces");
+		Runnable task = new Runnable() {
+			public void run() {
+				bot = new RobotController();
+				bot.startFinch();
+				retracer = new Retracer(bot, Controller);
+
+			}
+		};
+		Thread services = new Thread(task);
+		services.setDaemon(true);
+		services.start();
+	}
+	
+	
 	
 	//call actions on Finch when commands accurately entered
 	@FXML
@@ -206,7 +249,8 @@ public class ControlScreenController {
 			speed = getSpeed();
 			duration = getDuration();
 			direction = getDirection();
-			actionUpdate("Got values");
+			//Clear the text boxes for next action
+			clearData();
 		} catch(Exception e) {
 			actionUpdate("Invalid inputs!");
 			clearData();
@@ -222,9 +266,12 @@ public class ControlScreenController {
 			return;
 		}
 		
+		/*
+		 * call bot action based off user input values. Each case adds  a new InputStorage object to the retrace list
+		 * then takes the requested action and finally sends an update to the UI. 
+		 */
 		switch(direction) {
 			case 'f': 
-				System.out.println("Switch reached");
 				bot.moveForward(speed, duration);
 				bot.addAction(new InputStorage(direction, speed, duration));
 				actionUpdate("Finch is moving forward at " + speed + " for " + duration);
@@ -256,8 +303,7 @@ public class ControlScreenController {
 			default:
 					actionUpdate("Invalid input! Please double check the intstructions and try again");
 		}
-		//Clear the text boxes for next action
-		clearData();
+		
 	}
 	//Check for invalid values and notify user
 	private boolean validate(int speed, int duration) {
@@ -266,13 +312,13 @@ public class ControlScreenController {
 		boolean flag = false;
 		
 		//check speed
-		if(speed < 100 && speed > 200) {
+		if(speed < 100 || speed > 200) {
 			actionUpdate("Speed must be between 100 and 200 Finch units");
 			flag = true;
 		}
 		
 		//check duration
-		if(duration <= 0 && duration > 6) {
+		if(duration <= 0 || duration > 6) {
 			actionUpdate("Duration must be between 1 and 6 seconds, dummie!");
 			flag = true;
 		}
@@ -282,12 +328,10 @@ public class ControlScreenController {
 	
 	
 	//retrace call from the UI
-	@FXML
 	private void retrace() {
 		//handle nulls
 		try {
 			int num = getNum();
-			
 			//call the call to retrace and clear data
 			retracer.callRetrace(num, bot.inputList);
 			clearData();
@@ -301,8 +345,8 @@ public class ControlScreenController {
 	
 	//sends new update message to UI
 	public void actionUpdate(String message) {
-		String update = outputArea.getText() + "\r\n" + "> " + message;
-		outputArea.setText(update);
+		outputArea.appendText("\r\n>" + message);
+		outputArea.appendText("");
 	}
 	
 	//give main access to bot instance. Getting pretty dependency heavy now!

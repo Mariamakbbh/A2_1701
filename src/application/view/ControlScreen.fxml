@@ -21,7 +21,7 @@
             <TextField fx:id="direction" layoutX="420.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
             <TextField fx:id="speed" layoutX="509.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
             <TextField fx:id="duration" layoutX="597.0" layoutY="325.0" prefHeight="31.0" prefWidth="60.0" />
-            <Button layoutX="171.0" layoutY="400.0" mnemonicParsing="false" onAction="#retrace" text="Retrace" />
+            <Button layoutX="171.0" layoutY="400.0" mnemonicParsing="false" onAction="#startRetrace" text="Retrace" />
             <Button layoutX="517.0" layoutY="401.0" mnemonicParsing="false" onAction="#startAction" text="Start" />
             <TextArea fx:id="outputArea" editable="false" layoutX="100.0" layoutY="462.0" prefHeight="100.0" prefWidth="600.0" wrapText="true" />
             <Label layoutX="144.0" layoutY="356.0" text="Number to retrace" />
