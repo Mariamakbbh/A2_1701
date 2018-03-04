@@ -1,10 +1,14 @@
 package application;
-	
+
+
 import java.io.IOException;
+
+import application.logic.Retracer;
 import application.logic.RobotController;
 import application.view.ControlScreenController;
 import application.view.RootLayoutController;
 import application.view.SplashScreenController;
+import drawshape.ShapeMain;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -15,8 +19,8 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	
-	
-	private Stage primaryStage;
+	private ShapeMain ShapeMain;
+	public Stage primaryStage;
 	private BorderPane rootLayout;
 	public RobotController bot;
 	
@@ -36,8 +40,21 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		startBot();
+		
 	}
-	
+	public void startBot() {
+		System.out.println("Starting serivces");
+		Runnable task = new Runnable() {
+			public void run() {
+				bot = new RobotController();
+				bot.startFinch();
+			}
+		};
+		Thread services = new Thread(task);
+		services.setDaemon(true);
+		services.start();
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -122,8 +139,19 @@ public class Main extends Application {
 		}
 	}
 	
-	//give main access to bot instance so Finch can be properly ended prior to program closing
-	public void setBot(RobotController bot) {
-		this.bot = bot;
+	public void showDrawShape() {
+		ShapeMain = new ShapeMain(this, primaryStage);
+		try {
+			ShapeMain.showMainView();
+			ShapeMain.showMainItems();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
+	//give main access to bot instance so Finch can be properly ended prior to program closing
+//	public void setBot(RobotController bot) {
+//		this.bot = bot;
+//	}
 }

@@ -1,6 +1,6 @@
 package drawshape.view;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

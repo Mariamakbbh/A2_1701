@@ -1,6 +1,6 @@
 package drawshape.view;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class StatisticsController {
 	
-	private Main main;
+	private ShapeMain shapeMain;
 	
 	@FXML
 	private Button closeButton;
@@ -30,10 +30,10 @@ public class StatisticsController {
 	
 	@FXML
 	public void handleShowStatistics() {
-		main.buildStringShapesDrawn();
-		main.calculateMostDrawn();
-		taListOfShapesDrawn.setText(Main.listShapesDrawn.toString());
-		txtMostDrawnShape.setText(Main.mostDrawn);
+		shapeMain.buildStringShapesDrawn();
+		shapeMain.calculateMostDrawn();
+		taListOfShapesDrawn.setText(ShapeMain.listShapesDrawn.toString());
+		txtMostDrawnShape.setText(ShapeMain.mostDrawn);
 	}
 
 	@FXML

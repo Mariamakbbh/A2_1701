@@ -223,10 +223,7 @@ public class ControlScreenController {
 		System.out.println("Starting serivces");
 		Runnable task = new Runnable() {
 			public void run() {
-				bot = new RobotController();
-				bot.startFinch();
 				retracer = new Retracer(bot, Controller);
-
 			}
 		};
 		Thread services = new Thread(task);
@@ -349,6 +346,6 @@ public class ControlScreenController {
 	//give main access to bot instance. Getting pretty dependency heavy now!
 	public void setMain(Main main) {
 		this.main = main;
-		main.bot = bot;
+		this.bot = main.bot;
 	}
 }

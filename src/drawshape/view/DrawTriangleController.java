@@ -2,7 +2,7 @@ package drawshape.view;
 
 import java.io.IOException;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class DrawTriangleController {
 
-	private Main main;
+	private ShapeMain shapeMain;
 	
 	@FXML
 	private Label errMessageSideOne;
@@ -40,10 +40,10 @@ public class DrawTriangleController {
 		if(isInputValid() && (sidesValidForTriangle())){
 			resetErrorMessages();
 			executeMessage.setText("Drawing...");
-				main.drawTriangleProcess(Integer.parseInt(sideOneField.getText()),Integer.parseInt(sideTwoField.getText()), Integer.parseInt(sideThreeField.getText()));
+				shapeMain.drawTriangleProcess(Integer.parseInt(sideOneField.getText()),Integer.parseInt(sideTwoField.getText()), Integer.parseInt(sideThreeField.getText()));
 				//Closing input window
-				Stage stage = (Stage) drawButton.getScene().getWindow();
-				stage.close();
+//				Stage stage = (Stage) drawButton.getScene().getWindow();
+//				stage.close();
 				//Alert drawing done
 				showAlertDoneNewStage();
 //			resetErrorMessages();
@@ -64,7 +64,7 @@ public class DrawTriangleController {
 //	}
 	@FXML
 	private void showAlertDoneNewStage() throws IOException {
-		Main.showAlertDone();
+		shapeMain.showAlertDone();
 	}
 
 	private boolean isInputValid() {
@@ -132,6 +132,10 @@ public class DrawTriangleController {
 	public void handleCloseButtonAction(ActionEvent event) {
 		Stage stage = (Stage) closeButton.getScene().getWindow();
 		stage.close();
+	}
+	
+	public void setShapeMain(ShapeMain shapeMain) {
+		this.shapeMain = shapeMain;
 	}
 
 }

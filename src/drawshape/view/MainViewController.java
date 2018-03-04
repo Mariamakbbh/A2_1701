@@ -2,13 +2,13 @@ package drawshape.view;
 
 import java.io.IOException;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
 public class MainViewController {
 
-	private Main main;
+	private ShapeMain shapeMain;
 
 	@FXML
 	private MenuItem navbarAbout;
@@ -18,7 +18,7 @@ public class MainViewController {
 
 	@FXML
 	private void aboutNewStage() throws IOException {
-		main.showAboutStage();
+		shapeMain.showAboutStage();
 	}
 	@FXML
 	private void killApplication() throws IOException {

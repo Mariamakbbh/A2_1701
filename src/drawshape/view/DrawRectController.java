@@ -2,7 +2,7 @@ package drawshape.view;
 
 import java.io.IOException;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import edu.cmu.ri.createlab.terk.robot.finch.Finch;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class DrawRectController {
 
-	private Main main;
+	private ShapeMain shapeMain;
 
 	//	@FXML
 	//	private void drawRectNewStage() throws IOException {
@@ -42,7 +42,12 @@ public class DrawRectController {
 		if(isInputValid()){
 			resetErrorMessages();
 			executeMessage.setText("Drawing...");
-				main.drawRectangleProcess(Integer.parseInt(widthField.getText()),Integer.parseInt(heightField.getText()));
+				try {
+					System.out.println(widthField.getText() + " < widthField : heightField > " + heightField.getText());
+				} catch (Exception e ) {
+					
+				}
+				shapeMain.drawRectangleProcess(Integer.parseInt(widthField.getText()),Integer.parseInt(heightField.getText()));
 				//Closing input window
 				Stage stage = (Stage) drawButton.getScene().getWindow();
 				stage.close();
@@ -97,6 +102,10 @@ public class DrawRectController {
 	
 	@FXML
 	private void showAlertDoneNewStage() throws IOException {
-		Main.showAlertDone();
+		ShapeMain.showAlertDone();
+	}
+	
+	public void setShapeMain(ShapeMain shapeMain) {
+		this.shapeMain = shapeMain;
 	}
 }

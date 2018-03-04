@@ -17,6 +17,11 @@ public class SplashScreenController {
 		main.showControlScreen();
 	}
 	
+	@FXML
+	private void shapeScreen() {
+		main.showDrawShape();
+	}
+	
 	//give access to main 
 	public void setMain(Main main) {
 		this.main = main;

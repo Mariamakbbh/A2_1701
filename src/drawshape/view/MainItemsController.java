@@ -2,34 +2,38 @@ package drawshape.view;
 
 import java.io.IOException;
 
-import drawshape.Main;
+import drawshape.ShapeMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXML;
 
 public class MainItemsController {
 	
-	private Main main;
+	private ShapeMain shapeMain;
 	
 	@FXML
 	private void drawRectNewStage() throws IOException {
-		Main.showDrawRectStage();
+		shapeMain.showDrawRectStage();
 	}
 	
 	@FXML
 	private void drawTriangleNewStage() throws IOException {
-		Main.showDrawTriangleStage();
+		shapeMain.showDrawTriangleStage();
 	}
 	
 	@FXML
 	private void exit() throws IOException {
-		main.doubleBuzz();
+		shapeMain.doubleBuzz();
 //		main.buildStringShapesDrawn();
 //		StatisticsController.handleCreateListAction();
-		if(Main.rectangleDrawnCounter > 0 || Main.triangleDrawnCounter > 0){
-			main.showStatisticsAndExitScene();
+		if(ShapeMain.rectangleDrawnCounter > 0 || ShapeMain.triangleDrawnCounter > 0){
+			shapeMain.showStatisticsAndExitScene();
 		}
 		else{
 			System.exit(0);
 		}
+	}
+	
+	public void setShapeMain(ShapeMain shapeMain) {
+		this.shapeMain = shapeMain;
 	}
 }
