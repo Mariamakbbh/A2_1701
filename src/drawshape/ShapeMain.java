@@ -33,9 +33,6 @@ public class ShapeMain {
 	public static String mostDrawn;
 	private Main main;
     
-//	public static void main(String[] args) {
-//		launch(args);
-//	}
 	
 	public void moveFinch(){
     myFinch.setLED(0, 255, 0);

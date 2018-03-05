@@ -15,16 +15,15 @@ public class ControlScreenController {
 	//javaFX fields 
 	@FXML
 	TextField numToRetrace;
-	
+
 	@FXML 
 	TextField duration;
-	
 	@FXML
 	TextField speed;
-	
+
 	@FXML
 	TextField direction;
-	
+
 	@FXML
 	private TextArea outputArea;
 
@@ -33,83 +32,90 @@ public class ControlScreenController {
 	@SuppressWarnings("unused")
 	private Main main;
 	private ControlScreenController Controller;
-	
+
 	public ControlScreenController() {
 	}
-	
+
 	public void initialize() {
-		
+
 		//create instances of bot and retrace class when layout is loaded
 		startServices();
 		//hold copy of this class and pass it to Bot
-		 Controller = this;
-		
+		Controller = this;
+
 		/*
 		 * attach event listeners for text inputs which minimize user input error
 		 * uses regEx to help validate input
 		 */
-		
+
 		//make sure input is an integer
 		numToRetrace.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (!newValue.matches("\\d*")) {
-				            numToRetrace.setText(newValue.replaceAll("[^\\d]", ""));
-				        }}});
-		
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("\\d*")) {
+					numToRetrace.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+
 		//make sure value is between 1-6 and only one digit
 		duration.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (newValue.matches("[^1-6]*")) {
-				        	duration.setText(newValue.replaceAll("[^1-6]", ""));
-				        }
-				        if(newValue.length() > 1) {
-				        	duration.setText(oldValue.substring(0, 1));
-				        }
-			 }});
-		
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (newValue.matches("[^1-6]*")) {
+					duration.setText(newValue.replaceAll("[^1-6]", ""));
+				}
+				if(newValue.length() > 1) {
+					duration.setText(oldValue.substring(0, 1));
+				}
+			}});
+
 		//make sure value is no more then a 3 digit integer
 		speed.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-						if(!newValue.matches("[0-9]*")) { 
-							 speed.setText(newValue.replaceAll("[^0-9]", ""));
-							 return;
-						}
-				        if (!newValue.matches("[0-9]*")) {
-				    		speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
-				        }
-				        if(newValue.length() > 3) {
-				        	speed.setText(oldValue.substring(0, 3));
-				        }
-				        if(!newValue.matches("[1|2][0-9]*")) {
-				        	speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
-				        }
-				        
-			 }});
-		
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("[0-9]*")) {
+					speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
+					speed.setText(newValue.replaceAll("[^0-9]", ""));
+				}
+				if(newValue.length() > 3) {
+					speed.setText(oldValue.substring(0, 3));
+				}
+				if(!newValue.matches("[1|2][0-9]*")) {
+					speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
+				}
+				if(newValue.length() == 3) {
+					int value = Integer.parseInt(newValue);
+					if(value > 200) {
+						speed.setText("200");
+					} else if(value < 100) {
+						speed.setText("100");
+					}
+				}
+
+			}});
+
 		//make sure direction is valid F, B, L, R no more then 1 character
 		direction.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (!newValue.matches("[f|F|b|B|r|R|l|L|q|Q]")) {
-				        	direction.setText(newValue.replaceAll("[^f|F|b|B|r|R|l|L|q|Q]", ""));
-				        }
-				        if(newValue.length() > 1) {
-				        	direction.setText(oldValue.substring(0, 1));
-				        }	        
-			 }});
-		
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("[f|F|b|B|r|R|l|L|q|Q]")) {
+					direction.setText(newValue.replaceAll("[^f|F|b|B|r|R|l|L|q|Q]", ""));
+				}
+				if(newValue.length() > 1) {
+					direction.setText(oldValue.substring(0, 1));
+				}	        
+			}});
+
 		///scroll to bottom of textarea after update
 		outputArea.textProperty().addListener(new ChangeListener<Object>() {
 			@Override
 			public void changed(ObservableValue<?> observable, Object oldValue,
-		            Object newValue) {
+					Object newValue) {
 				outputArea.setScrollTop(Double.MAX_VALUE);
 			}
-			});
-		
+		});
+
 		//set initial action window message
 		String welcome = "> Prepare to assume control of a very powerful Robot";
 		outputArea.setText(welcome);
@@ -120,80 +126,80 @@ public class ControlScreenController {
 	 */
 	private int getNum() {
 		try {
-			
-		if(numToRetrace.getText().trim().equals("")){
-			
-		}
-		int value = Integer.parseInt(numToRetrace.getText());
-		return value;
+
+			if(numToRetrace.getText().trim().equals("")){
+
+			}
+			int value = Integer.parseInt(numToRetrace.getText());
+			return value;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
-	
+
 	private void clearNum() {
 		numToRetrace.clear();
 	}
-	
+
 	private int getSpeed() {
 		try {
 			if(speed.getText().trim().equals(""))
 				return 0;
 			int value  = Integer.parseInt(speed.getText());
 			return value;
-			
+
 		} catch (Exception e) {
 			return 0;
 		}
 	}
-	
+
 	private void clearSpeed() {
 		try {
-			
-		speed.clear();
+
+			speed.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int getDuration() {
 		try{
-		if(duration.getText().trim().equals(""))
-			return 0;
-		int value = Integer.parseInt(duration.getText());
-		return value;
+			if(duration.getText().trim().equals(""))
+				return 0;
+			int value = Integer.parseInt(duration.getText());
+			return value;
 		} catch (Exception e) {
 			return 0;
 		}
 	}
-	
+
 	private void clearDuration() {
 		duration.clear();
 	}
-	
+
 	private char getDirection() {
-	    try {
-	    if(direction.getText().trim().equals(""))
-	    	return 0;
-		char value = direction.getText().charAt(0);
-		return value;
-	    } catch (Exception e) {
-	    	return 0;
-	    }
+		try {
+			if(direction.getText().trim().equals(""))
+				return 0;
+			char value = direction.getText().charAt(0);
+			return value;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
-	
+
 	private void clearDirection() {
 		direction.clear();
 	}
-	
+
 	private void clearData() { 
 		clearNum();
 		clearSpeed();
 		clearDirection();
 		clearDuration();
 	}
-	
+
 	//background thread for running bot commands so UI doesn't freeze
 	@FXML
 	public void startAction() {
@@ -206,7 +212,7 @@ public class ControlScreenController {
 		finchAction.setDaemon(true);
 		finchAction.start();
 	}
-	
+
 	@FXML
 	public void startRetrace() {
 		System.out.println("Retracing in thread");
@@ -230,17 +236,17 @@ public class ControlScreenController {
 		services.setDaemon(true);
 		services.start();
 	}
-	
-	
-	
+
+
+
 	//call actions on Finch when commands accurately entered
 	@FXML
 	private void acceptInput() {
-		
+
 		int speed;
 		int duration;
 		char direction;
-		
+
 		//handling exceptions for null's just in case
 		try {
 			speed = getSpeed();
@@ -265,52 +271,52 @@ public class ControlScreenController {
 			actionUpdate("Values didnt pass validation");
 			return;
 		}
-		
+
 		/*
 		 * call bot action based off user input values. Each case adds  a new InputStorage object to the retrace list
 		 * then takes the requested action and finally sends an update to the UI. 
 		 */
 		switch(direction) {
-			case 'f': 
-				bot.moveForward(speed, duration);
-				bot.addAction(new InputStorage(direction, speed, duration));
-				actionUpdate("Finch is moving forward at " + speed + " for " + duration);
-				break;
-				
-			case 'b':
-				bot.moveBack(speed, duration);
-				bot.addAction(new InputStorage(direction, speed, duration));
-				actionUpdate("Finch is moving back at " + speed + " for " + duration);
-				break;
-				
-			case 'r':
-				bot.moveRight(speed, duration);
-				bot.addAction(new InputStorage(direction, speed, duration));
-				actionUpdate("Finch is moving right at " + speed + " for " + duration);
-				break;
-				
-			case 'l':
-				bot.moveLeft(speed, duration);
-				bot.addAction(new InputStorage(direction, speed, duration)) 	;
-				actionUpdate("Finch is moving left at " + speed + " for " + duration);
-				break;
-			default:
-					actionUpdate("Invalid input! Please double check the intstructions and try again");
+		case 'f': 
+			bot.moveForward(speed, duration);
+			bot.addAction(new InputStorage(direction, speed, duration));
+			actionUpdate("Finch is moving forward at " + speed + " for " + duration);
+			break;
+
+		case 'b':
+			bot.moveBack(speed, duration);
+			bot.addAction(new InputStorage(direction, speed, duration));
+			actionUpdate("Finch is moving back at " + speed + " for " + duration);
+			break;
+
+		case 'r':
+			bot.moveRight(speed, duration);
+			bot.addAction(new InputStorage(direction, speed, duration));
+			actionUpdate("Finch is moving right at " + speed + " for " + duration);
+			break;
+
+		case 'l':
+			bot.moveLeft(speed, duration);
+			bot.addAction(new InputStorage(direction, speed, duration)) 	;
+			actionUpdate("Finch is moving left at " + speed + " for " + duration);
+			break;
+		default:
+			actionUpdate("Invalid input! Please double check the intstructions and try again");
 		}
-		
+
 	}
 	//Check for invalid values and notify user
 	private boolean validate(int speed, int duration) {
-		
+
 		//if flag is true there was an invalid value
 		boolean flag = false;
-		
+
 		//check speed
 		if(speed < 100 || speed > 200) {
 			actionUpdate("Speed must be between 100 and 200 Finch units");
 			flag = true;
 		}
-		
+
 		//check duration
 		if(duration <= 0 || duration > 6) {
 			actionUpdate("Duration must be between 1 and 6 seconds, dummie!");
@@ -319,8 +325,8 @@ public class ControlScreenController {
 		//true if invalid values present
 		return flag ? true : false;
 	}
-	
-	
+
+
 	//retrace call from the UI
 	private void retrace() {
 		//handle nulls
@@ -329,20 +335,20 @@ public class ControlScreenController {
 			//call the call to retrace and clear data
 			retracer.callRetrace(num, bot.inputList);
 			clearData();
-			
+
 		} catch (Exception e) {
-			
+
 			//clear data either way
 			clearData();
 		}
 	}
-	
+
 	//sends new update message to UI
 	public void actionUpdate(String message) {
 		outputArea.appendText("\r\n>" + message);
 		outputArea.appendText("");
 	}
-	
+
 	//give main access to bot instance. Getting pretty dependency heavy now!
 	public void setMain(Main main) {
 		this.main = main;
