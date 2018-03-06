@@ -36,7 +36,6 @@ public class ControlScreenController {
 	
 	public ControlScreenController() {
 	}
-	
 	public void initialize() {
 		
 		//create instances of bot and retrace class when layout is loaded
@@ -118,11 +117,11 @@ public class ControlScreenController {
 	 * getters and clearers that assist with retrieving values from the UI and clearing TextFields 
 	 * error handling was added in case of a NULLPOINTEEXCEPTION
 	 */
-	private int getNum() {
+	public int getNum() {
 		try {
 			
-		if(numToRetrace.getText().trim().equals("")){
-			
+		if(numToRetrace == null || numToRetrace.getText().trim() == ""){
+			return 0;
 		}
 		int value = Integer.parseInt(numToRetrace.getText());
 		return value;
@@ -136,7 +135,7 @@ public class ControlScreenController {
 		numToRetrace.clear();
 	}
 	
-	private int getSpeed() {
+	public int getSpeed() {
 		try {
 			if(speed.getText().trim().equals(""))
 				return 0;
@@ -157,7 +156,7 @@ public class ControlScreenController {
 		}
 	}
 	
-	private int getDuration() {
+	public int getDuration() {
 		try{
 		if(duration.getText().trim().equals(""))
 			return 0;
@@ -172,7 +171,7 @@ public class ControlScreenController {
 		duration.clear();
 	}
 	
-	private char getDirection() {
+	public char getDirection() {
 	    try {
 	    if(direction.getText().trim().equals(""))
 	    	return 0;
