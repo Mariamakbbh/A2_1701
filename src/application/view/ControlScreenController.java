@@ -62,7 +62,7 @@ public class ControlScreenController {
 		duration.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, 
 					String newValue) {
-				if (newValue.matches("[^1-6]*")) {
+				if (newValue.matches("[^1-6]")) {
 					duration.setText(newValue.replaceAll("[^1-6]", ""));
 				}
 				if(newValue.length() > 1) {
@@ -81,7 +81,7 @@ public class ControlScreenController {
 				if(newValue.length() > 3) {
 					speed.setText(oldValue.substring(0, 3));
 				}
-				if(!newValue.matches("[1|2][0-9]*")) {
+				if(!newValue.matches("[1|2][0-9]{0,2}")) {
 					speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
 				}
 				if(newValue.length() == 3) {
