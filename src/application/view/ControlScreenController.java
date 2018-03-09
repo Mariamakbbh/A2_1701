@@ -49,64 +49,74 @@ public class ControlScreenController {
 		 */
 		
 		//make sure input is an integer
-		numToRetrace.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (!newValue.matches("\\d*")) {
-				            numToRetrace.setText(newValue.replaceAll("[^\\d]", ""));
-				        }}});
-		
-		//make sure value is between 1-6 and only one digit
-		duration.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (newValue.matches("[^1-6]*")) {
-				        	duration.setText(newValue.replaceAll("[^1-6]", ""));
-				        }
-				        if(newValue.length() > 1) {
-				        	duration.setText(oldValue.substring(0, 1));
-				        }
-			 }});
-		
-		//make sure value is no more then a 3 digit integer
-		speed.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-						if(!newValue.matches("[0-9]*")) { 
-							 speed.setText(newValue.replaceAll("[^0-9]", ""));
-							 return;
+			numToRetrace.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (!newValue.matches("\\d{0,2}")) {
+						numToRetrace.setText(newValue.replaceAll("[^\\d]", ""));
+					} if(newValue.isEmpty()) {
+						
+					} else if( Integer.parseInt(newValue) > (bot.inputList.size())) {
+						numToRetrace.setText(String.valueOf(bot.inputList.size()));
+					}
+				}
+			});
+
+			//make sure value is between 1-6 and only one digit
+			duration.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("[^1-6]")) {
+						duration.setText(newValue.replaceAll("[^1-6]", ""));
+					}
+					if(newValue.length() > 1) {
+						duration.setText(oldValue.substring(0, 1));
+					}
+				}});
+
+			//make sure value is no more then a 3 digit integer
+			speed.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (!newValue.matches("[0-9]*")) {
+						speed.setText(newValue.replace("[^0-9]", ""));
+//						speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
+					} else if(!newValue.matches("[1|2][0-9]{0,2}")) {
+						speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
+					}
+					if(newValue.length() > 3) {
+						speed.setText(oldValue.substring(0, 3));
+					}
+					if(newValue.length() == 3) {
+						int value = Integer.parseInt(newValue);
+						if(value > 200) {
+							speed.setText("200");
+						} else if(value < 100) {
+							speed.setText("100");
 						}
-				        if (!newValue.matches("[0-9]*")) {
-				    		speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
-				        }
-				        if(newValue.length() > 3) {
-				        	speed.setText(oldValue.substring(0, 3));
-				        }
-				        if(!newValue.matches("[1|2][0-9]*")) {
-				        	speed.setText((newValue.length() > 1) ? newValue.substring(0, newValue.length()-1) :  "");
-				        }
-				        
-			 }});
-		
-		//make sure direction is valid F, B, L, R no more then 1 character
-		direction.textProperty().addListener(new ChangeListener<String>() {
-			 public void changed(ObservableValue<? extends String> observable, String oldValue, 
-				        String newValue) {
-				        if (!newValue.matches("[f|F|b|B|r|R|l|L|q|Q]")) {
-				        	direction.setText(newValue.replaceAll("[^f|F|b|B|r|R|l|L|q|Q]", ""));
-				        }
-				        if(newValue.length() > 1) {
-				        	direction.setText(oldValue.substring(0, 1));
-				        }	        
-			 }});
-		
-		///scroll to bottom of textarea after update
-		outputArea.textProperty().addListener(new ChangeListener<Object>() {
-			@Override
-			public void changed(ObservableValue<?> observable, Object oldValue,
-		            Object newValue) {
-				outputArea.setScrollTop(Double.MAX_VALUE);
-			}
+					}
+
+				}});
+
+			//make sure direction is valid F, B, L, R no more then 1 character
+			direction.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (!newValue.matches("[f|F|b|B|r|R|l|L|q|Q]")) {
+						direction.setText(newValue.replaceAll("[^f|F|b|B|r|R|l|L|q|Q]", ""));
+					}
+					if(newValue.length() > 1) {
+						direction.setText(oldValue.substring(0, 1));
+					}	        
+				}});
+
+			///scroll to bottom of textarea after update
+			outputArea.textProperty().addListener(new ChangeListener<Object>() {
+				@Override
+				public void changed(ObservableValue<?> observable, Object oldValue,
+						Object newValue) {
+					outputArea.setScrollTop(Double.MAX_VALUE);
+				}
 			});
 		
 		//set initial action window message
