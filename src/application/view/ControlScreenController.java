@@ -52,8 +52,12 @@ public class ControlScreenController {
 		numToRetrace.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, 
 					String newValue) {
-				if (!newValue.matches("\\d*")) {
+				if (!newValue.matches("\\d{0,2}")) {
 					numToRetrace.setText(newValue.replaceAll("[^\\d]", ""));
+				} if(newValue.isEmpty()) {
+					
+				} else if( Integer.parseInt(newValue) > (bot.inputList.size())) {
+					numToRetrace.setText(String.valueOf(bot.inputList.size()));
 				}
 			}
 		});
