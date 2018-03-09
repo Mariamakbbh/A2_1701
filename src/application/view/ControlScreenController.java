@@ -269,6 +269,11 @@ public class ControlScreenController {
 		direction = Character.toLowerCase(direction);
 		
 		//validate speed and duration are within bounds
+	if(direction == 'q') {
+		//implements Q command, incase anyone wants to use it
+		bot.endFinch();
+		System.exit(0);
+	}
 		if(validate(speed, duration)){
 			//error message to user
 			actionUpdate("Values didnt pass validation");
@@ -302,11 +307,6 @@ public class ControlScreenController {
 				bot.moveLeft(speed, duration);
 				bot.addAction(new InputStorage(direction, speed, duration)) 	;
 				actionUpdate("Finch is moving left at " + speed + " for " + duration);
-				break;
-				
-			case 'q': //implements Q command, incase anyone wants to use it
-				bot.endFinch();
-				System.exit(0);
 				break;
 				
 			default:
