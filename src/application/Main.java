@@ -1,6 +1,8 @@
 package application;
 	
 import java.io.IOException;
+
+import ZigZag.finchtask;
 import application.logic.RobotController;
 import application.view.ControlScreenController;
 import application.view.RootLayoutController;
@@ -121,9 +123,11 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	//give main access to bot instance so Finch can be properly ended prior to program closing
-	public void setBot(RobotController bot) {
-		this.bot = bot;
+	public void launchZigZag() {
+		finchtask zigZag = new finchtask();
+		zigZag.setFinch(bot.bot);
+		zigZag.main(null);
+//		setBot(RobotController bot) {
+//		this.bot = bot;
 	}
 }
